@@ -1,3 +1,4 @@
+// src/pages/HomePage.jsx
 import React, { useState } from 'react';
 import { fetchMovies } from '../api';
 import ItemList from '../components/ItemList';
@@ -33,7 +34,7 @@ const HomePage = () => {
         }}
       >
         <Typography variant="h4" gutterBottom>
-          GoBananas Movie Search App
+           Movie Search App
         </Typography>
       </Box>
       <SearchBar onSearch={handleSearch} />
@@ -51,6 +52,9 @@ const HomePage = () => {
         </>
       )}
     </Container>
+
+    
+    
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ListItem, ListItemText, Box, Avatar, ListItemAvatar, Typography } from '@mui/material';
+import { List, ListItem, ListItemText, Box, Avatar, ListItemAvatar, Typography, Button, Grid } from '@mui/material';
 
 const ItemList = ({ items }) => (
   <List>
@@ -27,16 +27,26 @@ const ItemList = ({ items }) => (
         >
           <Typography 
             variant="subtitle1" 
-            sx={{ fontWeight: 'bold', color: 'blue', fontSize: '20px',  }}
+            sx={{ fontWeight: 'bold', color: 'blue', fontSize: '20px',marginBottom: '5px' }}
           >
             {item.Title}
           </Typography>
           <Typography 
             variant="body2" 
-            sx={{ color: 'black', fontSize: '16px' }}
+            sx={{ color: 'black', fontSize: '16px', marginBottom: '10px' }}
           >
             Year: {item.Year}
           </Typography>
+          <Grid item>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          size="large"
+          sx={{ height: '90%' }} 
+        >
+          Watch Now
+        </Button>
+      </Grid>
         </Box>
       </ListItem>
     ))}
