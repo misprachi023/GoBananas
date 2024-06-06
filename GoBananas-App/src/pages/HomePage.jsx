@@ -1,51 +1,55 @@
-// src/pages/HomePage.jsx
-import React, { useEffect, useState } from 'react';
-import { fetchItems } from '../api';
+import React, { useState } from 'react';
+import { fetchMovies } from '../api';
 import ItemList from '../components/ItemList';
 import SearchBar from '../components/SearchBar';
-import { Container, Typography , Box} from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 
-//Fetch data from API
 const HomePage = () => {
-  const [items, setItems] = useState([]);
-  const [filteredItems, setFilteredItems] = useState([]);
+  const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchError, setSearchError] = useState(false); // State to track search error
 
-  useEffect(() => {
-    const getItems = async () => {
-      const fetchedItems = await fetchItems();
-      setItems(fetchedItems);
-      setFilteredItems(fetchedItems);
-    };
-    getItems();
-  }, []);
-
-  //Search function
-  const handleSearch = (searchTerm) => {
-    const filtered = items.filter(item =>
-      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.body.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredItems(filtered);
+  const handleSearch = async (query) => {
+    setSearchTerm(query);
+    const fetchedMovies = await fetchMovies(query);
+    if (fetchedMovies.length === 0) {
+      setSearchError(true); // Set search error to true if no movies are found
+    } else {
+      setSearchError(false); // Reset search error if movies are found
+    }
+    setMovies(fetchedMovies);
   };
 
   return (
     <Container>
-      <Box 
-        sx={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '20vh',
           textAlign: 'center',
-          color: 'red',
-
+          color: 'brown',
         }}
       >
         <Typography variant="h4" gutterBottom>
-          GoBananas App
+          GoBananas Movie Search App
         </Typography>
       </Box>
       <SearchBar onSearch={handleSearch} />
-      <ItemList items={filteredItems} />
+      {searchTerm && searchError && ( // Display message if search term is entered and no movies are found
+        <Typography variant="h6" sx={{ margin: '20px 0', color: 'red' }}>
+          No movies found for "{searchTerm}"
+        </Typography>
+      )}
+      {searchTerm && !searchError && ( // Display search results if search term is entered and movies are found
+        <>
+          <Typography variant="h6" sx={{ margin: '20px 0', color: 'green' }}>
+            Results for "{searchTerm}"
+          </Typography>
+          <ItemList items={movies} />
+        </>
+      )}
     </Container>
   );
 };

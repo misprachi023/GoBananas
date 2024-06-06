@@ -1,25 +1,42 @@
 import React from 'react';
-import { List, ListItem, ListItemText, Box } from '@mui/material';
+import { List, ListItem, ListItemText, Box, Avatar, ListItemAvatar, Typography } from '@mui/material';
 
 const ItemList = ({ items }) => (
   <List>
     {items.map(item => (
-      <ListItem key={item.id}>
+      <ListItem key={item.imdbID} alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar
+            variant="rounded"
+            src={item.Poster !== "N/A" ? item.Poster : "/default-poster.jpg"} // Default poster if no image
+            alt={item.Title}
+            sx={{ width: 230, height: 230, marginRight: '16px' }} // Medium size poster
+          />
+        </ListItemAvatar>
         <Box 
           sx={{ 
-            border: '1px solid #ccc', 
             borderRadius: '8px', 
-            padding: '16px', 
-            backgroundColor: '#f9f9f9', 
-            width: '100%'
+            padding: '25-px', 
+            margin: '10px',
+            backgroundColor: '#fff', 
+            width: '50%',
+            display: 'flex', 
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
         >
-          <ListItemText 
-            primary={item.title} 
-            secondary={item.body} 
-            primaryTypographyProps={{ style: { color: '#333', fontWeight: 'bold' } }}
-            secondaryTypographyProps={{ style: { color: '#666' } }}
-          />
+          <Typography 
+            variant="subtitle1" 
+            sx={{ fontWeight: 'bold', color: 'blue', fontSize: '20px',  }}
+          >
+            {item.Title}
+          </Typography>
+          <Typography 
+            variant="body2" 
+            sx={{ color: 'black', fontSize: '16px' }}
+          >
+            Year: {item.Year}
+          </Typography>
         </Box>
       </ListItem>
     ))}

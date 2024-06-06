@@ -6,10 +6,10 @@ const SearchBar = ({ onSearch }) => (
     <Grid container justifyContent="center">
       <Grid item xs={12} sm={10} md={8} lg={6}>
         <TextField
-          label="Search"
+          label="Search Movies"
           variant="outlined"
           fullWidth
-          size="medium" 
+          size="medium"
           onChange={(e) => onSearch(e.target.value)}
         />
       </Grid>
